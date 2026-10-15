@@ -1,0 +1,6 @@
+{
+ "rules":[
+  {"id":"abort-abandoned-multipart","enabled":true,"conditions":{"prefix":""},"abortMultipartUploadsTransition":{"condition":{"type":"Age","maxAge":86400}}},
+  {"id":"retention-safety-net","enabled":true,"conditions":{"prefix":""},"deleteObjectsTransition":{"condition":{"type":"Age","maxAge":2678400}}}
+ ]
+}

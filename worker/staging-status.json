@@ -1,0 +1,13 @@
+{
+  "account_id": "b6683d42632a146d7b07fad1a528a8cb",
+  "worker": "deplyze-space-staging",
+  "worker_url": "https://deplyze-space-staging.deplyze-space-b6683d42.workers.dev",
+  "bundle_sha256": "7f8ddd4ba01ea2e19592de26fe711662748e199709c067ba36a19032bef23e91",
+  "database_id": "a372c702-cb31-429d-ad69-a6c4d142f534",
+  "migration_applied": "0001_transfers.sql",
+  "r2_bound": false,
+  "uploads_enabled": false,
+  "cron_registered": false,
+  "public_health_verified": false,
+  "blocker": "Cloudflare 10042: R2 requires dashboard activation"
+}
