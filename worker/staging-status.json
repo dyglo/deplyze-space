@@ -6,7 +6,7 @@
   "database_id": "a372c702-cb31-429d-ad69-a6c4d142f534",
   "migration_applied": "0001_transfers.sql",
   "r2_bound": true,
-  "uploads_enabled": false,
+  "uploads_enabled": true,
   "cron_registered": true,
   "public_health_verified": false,
   "blocker": "Staging frontend, Worker and R2 hosts denied by enforced execution HTTP network policy",

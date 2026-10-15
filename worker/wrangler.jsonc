@@ -22,7 +22,7 @@
     "SHARE_ORIGIN": "https://deplyze-space-staging-next-q.vercel.app",
     "R2_ACCOUNT_ID": "b6683d42632a146d7b07fad1a528a8cb",
     "R2_BUCKET": "deplyze-space-staging",
-    "UPLOADS_ENABLED": "false",
+    "UPLOADS_ENABLED": "true",
     "R2_ENDPOINT": "",
   },
   "r2_buckets": [

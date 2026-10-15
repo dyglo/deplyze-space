@@ -10,7 +10,7 @@ Status: implementation verified locally; staging Worker and D1 deployed; **not r
 - Four desktop/mobile Chromium browser tests: actual multipart upload, pause/reload/recovery without a second transfer, QR pixel decoding to the exact share URL, separate-browser-context download with correct filename and SHA-256, password unlock, multiple/empty files, starting over and invalid links.
 - Cloudflare MCP registration recovered following reauthorization. The connected account changed to `b6683d42632a146d7b07fad1a528a8cb` (guidenow7@gmail.com). Reads inspected existing resources before creating the named staging resources.
 - Hosted D1 database `deplyze-space-staging`, ID `a372c702-cb31-429d-ad69-a6c4d142f534`, created and schema applied. Migration recorded in `d1_migrations`. A hosted concurrency check admitted exactly 10 of 12 quota reservations, rejected two, and cleaned its records; reserved bytes and test rows returned to zero.
-- Actual application Worker `deplyze-space-staging` uploaded successfully through the Cloudflare API (HTTP 200). Uploads are disabled, R2 is now bound, both S3 credential names are encrypted secret bindings (values not displayed), and a signing secret was generated/stored without disclosure. The staging workers.dev hostname is enabled. Cleanup Cron is registered at */15 * * * *; bucket lifecycle rules abort incomplete uploads after 24 hours and remove leftovers after 31 days. Public r2.dev access is disabled and there are no custom bucket domains.
+- Actual application Worker `deplyze-space-staging` uploaded successfully through the Cloudflare API (HTTP 200). The operator enabled staging uploads; a settings read confirms `UPLOADS_ENABLED=true`, the correct R2/D1 bindings, and both S3 credentials as encrypted secrets (values not displayed). Configuration does not certify S3 authorization or hosted uploads. The staging workers.dev hostname is enabled. Cleanup Cron is registered at */15 * * * *; bucket lifecycle rules abort incomplete uploads after 24 hours and remove leftovers after 31 days. Public r2.dev access is disabled and there are no custom bucket domains.
 
 Backend staging URL: https://deplyze-space-staging.deplyze-space-b6683d42.workers.dev
 
@@ -27,7 +27,7 @@ The frontend deployment reached READY and its home and transfer pages returned H
    - `deplyze-space-staging.deplyze-space-b6683d42.workers.dev`
    - `b6683d42632a146d7b07fad1a528a8cb.r2.cloudflarestorage.com`
    This is separate from Worker/R2 CORS settings, which are already configured. Do not bypass the proxy or edit the local policy snapshot to simulate access.
-2. GitHub Actions cannot start because the account is locked due to a billing issue, as stated by the annotation on run 38773614747. Local checks and Vercel builds remain independently verified.
+2. GitHub Actions cannot start because the account is locked due to a billing issue, as stated by the annotation on run 38775814343. Local checks and Vercel builds remain independently verified.
 
 R2 activation and credential setup are resolved. Inspection found the supplied bindings were plaintext and the Access Key ID was named `R2_SECRET_KEY_ID`. The values were renamed and converted to encrypted `R2_ACCESS_KEY_ID` and `R2_SECRET_ACCESS_KEY` inside Cloudflare without displaying or committing their values. A follow-up settings read confirms both are `secret_text`. Actual S3 authorization has not yet been exercised. Token-management discovery's earlier error 9109 is not a staging blocker now that the operator supplied the credentials.
 
@@ -38,11 +38,11 @@ Historical pre-reauthorization calls in account `34c5468ebfcd71e2a958b25cfb0bde4
 ## Remaining release work
 
 - Verify the configured S3 credentials against hosted R2 once network access is available. Keep public bucket domains disabled. CORS, lifecycle safeguards, R2 binding and Cron are already applied; inspect before changing them.
-- The separate Vercel staging frontend and exact frontend/API/share origins are configured. Deploy subsequent tested fixes to that same staging project. `UPLOADS_ENABLED` must stay false until storage, quotas and CORS are verified. The full deployment script checks the staging account, resource names and origins; it does not switch production domains.
+- The separate Vercel staging frontend and exact frontend/API/share origins are configured. Deploy subsequent tested fixes to that same staging project. The operator explicitly enabled `UPLOADS_ENABLED` for staging verification; the tracked manifest now preserves that setting. Hosted S3 authorization and uploads remain unverified. The full deployment script checks the staging account, resource names and origins; it does not switch production domains.
 - Repeat actual uploads against hosted R2, including signed Content-Length and MD5 enforcement, 2 GiB boundary transfers, concurrent actual uploads, retries, expiration, cleanup and separate devices. Local behavior does not certify hosted R2 enforcement.
 - Confirm paid Workers CPU capacity and measure the 600,000-iteration PBKDF2 latency. Confirm a private abuse contact and the operator's privacy/retention language.
 - Inspect the live domain's current project and DNS, stage the concrete production build, and obtain approval before the domain cutover. No cutover approval has been requested or granted.
-- GitHub Actions run 38773614747 did not start its job. Its public run annotation states: “The job was not started because your account is locked due to a billing issue.” This is a verified GitHub account blocker, not a failing application test. Resolve billing before relying on CI; local checks and Vercel builds independently pass.
+- GitHub Actions run 38775814343 did not start its job. Its public run annotation states: “The job was not started because your account is locked due to a billing issue.” This is a verified GitHub account blocker, not a failing application test. Resolve billing before relying on CI; local checks and Vercel builds independently pass.
 
 ## Implementation limits
 
