@@ -12,13 +12,14 @@
       "enabled": true,
       "invocation_logs": false,
     },
+    "redact_query_string": true,
   },
   "triggers": {
     "crons": ["*/15 * * * *"],
   },
   "vars": {
-    "ALLOWED_ORIGINS": "http://localhost:3000",
-    "SHARE_ORIGIN": "http://localhost:3000",
+    "ALLOWED_ORIGINS": "https://deplyze-space-staging-next-q.vercel.app,https://deplyze-space-staging-iof4sotjf-next-q.vercel.app",
+    "SHARE_ORIGIN": "https://deplyze-space-staging-next-q.vercel.app",
     "R2_ACCOUNT_ID": "b6683d42632a146d7b07fad1a528a8cb",
     "R2_BUCKET": "deplyze-space-staging",
     "UPLOADS_ENABLED": "false",

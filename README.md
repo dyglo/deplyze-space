@@ -1,6 +1,6 @@
 # Deplyze Space
 
-Existing Next.js design with a Cloudflare Worker, private R2 storage, and D1 metadata. No account required. **Not production released:** the staging Worker and D1 schema are deployed, but R2 activation and hosted transfer verification remain blocked; see [readiness](docs/READINESS.md).
+Existing Next.js design with a Cloudflare Worker, private R2 storage, and D1 metadata. No account required. **Not production released:** the staging Worker and D1 schema are deployed, but S3 credential configuration and hosted transfer verification remain blocked; see [readiness](docs/READINESS.md).
 
 ## Local checks
 
@@ -10,13 +10,13 @@ Node 24, npm. `npm ci`, `npm run worker:types`, `npm run typecheck`, `npm test`,
 
 ## Staging setup
 
-Inspect resources in account `b6683d42632a146d7b07fad1a528a8cb` before creating anything. Reuse resources named `deplyze-space-staging`. Do not reuse `deplyzegpt-storage`. The tracked D1 ID is `a372c702-cb31-429d-ad69-a6c4d142f534`. This database and the named Worker already exist; reuse them. R2 bucket creation returns error 10042 until the operator enables R2 in the Dashboard.
+Inspect resources in account `b6683d42632a146d7b07fad1a528a8cb` before creating anything. Reuse resources named `deplyze-space-staging`. Do not reuse `deplyzegpt-storage`. The tracked D1 ID is `a372c702-cb31-429d-ad69-a6c4d142f534`. This database and the named Worker already exist; reuse them. The private bucket now exists, has public access disabled, and has CORS/lifecycle safeguards applied. The cleanup Cron is registered. Both S3 credential secrets are still missing.
 
 1. Verify Cloudflare connection and account. Required permissions: Workers R2 Storage Write, D1 Write, Workers Scripts Write. A bucket-scoped R2 Object Read & Write credential is also required for S3 multipart control/signing. No credentials belong in the browser or Git.
-2. Create only missing `deplyze-space-staging` R2 bucket and D1 database. Record the real D1 ID in `worker/wrangler.jsonc`. Keep R2 `r2.dev` and custom public domains disabled. Inspect existing settings before changes.
+2. Reuse the existing `deplyze-space-staging` R2 bucket and D1 database. Create them only if inspection confirms they are missing. Record the real D1 ID in `worker/wrangler.jsonc`. Keep R2 `r2.dev` and custom public domains disabled. Inspect existing settings before changes.
 3. Set Worker secrets with `wrangler secret put NAME --config worker/wrangler.jsonc`: `SIGNING_SECRET` (random 256+ bits), `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`. Use secure interactive input or secret-manager input; never put values in arguments or logs.
-4. Create/reuse a separate Vercel staging project. Set its `NEXT_PUBLIC_API_URL` to the deployed Worker origin; no trailing slash. Set Worker `ALLOWED_ORIGINS` and `SHARE_ORIGIN` to the exact staging frontend origin. Never allow `*.vercel.app` or reflect arbitrary origins. Hosted share links use that staging origin; production will use `https://deplyze.space` after approval.
-5. Adapt and apply `worker/r2-cors.example.json` to the staging bucket. Apply `worker/r2-lifecycle.json` using Cloudflare's bucket API/dashboard after confirming its schema. CORS must expose `ETag`, allow `PUT` and signed MD5 headers, and restrict origins. Lifecycle safeguards abort incomplete uploads at 24 hours and remove leftover objects after 31 days. These files have not been applied remotely.
+4. Reuse Vercel staging project `prj_Sl8WgKVXOjMJapGIsB6TmwNzUhjy`. Set its `NEXT_PUBLIC_API_URL` to the deployed Worker origin; no trailing slash. Set Worker `ALLOWED_ORIGINS` and `SHARE_ORIGIN` to the exact staging frontend origin. Never allow `*.vercel.app` or reflect arbitrary origins. Hosted share links use that staging origin; production will use `https://deplyze.space` after approval.
+5. Adapt and apply `worker/r2-cors.example.json` to the staging bucket. Apply `worker/r2-lifecycle.json` using Cloudflare's bucket API/dashboard after confirming its schema. CORS must expose `ETag`, allow `PUT` and signed MD5 headers, and restrict origins. Lifecycle safeguards abort incomplete uploads at 24 hours and remove leftover objects after 31 days. The staging policy is tracked in `worker/r2-cors.staging.json`; it and the lifecycle rules have been applied remotely.
 6. Keep `R2_ENDPOINT` empty outside local tests. Verify private bucket settings and safeguards, then set `UPLOADS_ENABLED` to `true`. Run `bash scripts/deploy-staging.sh`. The script rejects placeholder IDs, localhost origins, and domain routes. It applies additive migrations before deploying.
 7. Deploy the staging Git branch to Vercel. Test actual R2 transfers from separate browsers and devices, expiration, cancellation, interruptions, and a 2 GB boundary transfer before release. Verify signed `Content-Length` rejection against hosted R2; local verification is insufficient to certify the remote service. Password hashing uses PBKDF2-SHA256 with 600,000 iterations; provision Workers CPU capacity and measure its hosted cost/latency.
 

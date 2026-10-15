@@ -5,9 +5,17 @@
   "bundle_sha256": "7f8ddd4ba01ea2e19592de26fe711662748e199709c067ba36a19032bef23e91",
   "database_id": "a372c702-cb31-429d-ad69-a6c4d142f534",
   "migration_applied": "0001_transfers.sql",
-  "r2_bound": false,
+  "r2_bound": true,
   "uploads_enabled": false,
-  "cron_registered": false,
+  "cron_registered": true,
   "public_health_verified": false,
-  "blocker": "Cloudflare 10042: R2 requires dashboard activation"
+  "blocker": "R2 S3 credential secrets not configured; staging hosts denied by execution network policy",
+  "r2_bucket": "deplyze-space-staging",
+  "bucket_public_access": false,
+  "lifecycle_applied": true,
+  "cors_applied": true,
+  "frontend_url": "https://deplyze-space-staging-next-q.vercel.app",
+  "vercel_project_id": "prj_Sl8WgKVXOjMJapGIsB6TmwNzUhjy",
+  "vercel_deployment_id": "dpl_5nPjDSHbbSZKgr5pDr72GUsvjFpo",
+  "frontend_http_verified": true
 }

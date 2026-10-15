@@ -1,35 +1,38 @@
 # Production readiness — 15 October 2026
 
-Status: implementation verified locally; staging Worker and D1 deployed; **not ready for production cutover**. R2 requires dashboard activation. No production DNS, domain assignments, or existing sites were changed.
+Status: implementation verified locally; staging Worker and D1 deployed; **not ready for production cutover**. The private R2 bucket, safeguards and Vercel staging frontend are deployed; S3 credential secrets and hosted transfer verification remain pending. No production DNS, domain assignments, or existing sites were changed.
 
 ## Verified
 
-- Frontend and Worker TypeScript checks, production Next.js build, Worker deployment dry run.
+- Frontend and Worker TypeScript checks, production Next.js build, Worker deployment dry run, and npm audit (zero reported vulnerabilities). Removed the unused shadcn CLI and its unused CSS import, eliminating seven high-severity dependency findings without changing the interface.
 - Thirteen unit/integration tests using Cloudflare's local Workers, D1, R2 and S3 runtime. Actual multipart upload and binary streaming download with matching SHA-256; no mocked API responses.
 - Empty objects, Unicode names, path/header validation, aggregate transfer limits, immediate expiry, passwords, unauthorized access, guess throttling, CORS, cancellation, repeatable cleanup, and atomic concurrent quotas.
 - Four desktop/mobile Chromium browser tests: actual multipart upload, pause/reload/recovery without a second transfer, QR pixel decoding to the exact share URL, separate-browser-context download with correct filename and SHA-256, password unlock, multiple/empty files, starting over and invalid links.
 - Cloudflare MCP registration recovered following reauthorization. The connected account changed to `b6683d42632a146d7b07fad1a528a8cb` (guidenow7@gmail.com). Reads inspected existing resources before creating the named staging resources.
 - Hosted D1 database `deplyze-space-staging`, ID `a372c702-cb31-429d-ad69-a6c4d142f534`, created and schema applied. Migration recorded in `d1_migrations`. A hosted concurrency check admitted exactly 10 of 12 quota reservations, rejected two, and cleaned its records; reserved bytes and test rows returned to zero.
-- Actual application Worker `deplyze-space-staging` uploaded successfully through the Cloudflare API (HTTP 200). Uploads are disabled, R2 is not bound, S3 credentials are absent, and a signing secret was generated/stored without disclosure. The staging workers.dev hostname is enabled. No cleanup Cron is registered yet because storage configuration is incomplete.
+- Actual application Worker `deplyze-space-staging` uploaded successfully through the Cloudflare API (HTTP 200). Uploads are disabled, R2 is now bound, S3 credentials are absent, and a signing secret was generated/stored without disclosure. The staging workers.dev hostname is enabled. Cleanup Cron is registered at */15 * * * *; bucket lifecycle rules abort incomplete uploads after 24 hours and remove leftovers after 31 days. Public r2.dev access is disabled and there are no custom bucket domains.
 
 Backend staging URL: https://deplyze-space-staging.deplyze-space-b6683d42.workers.dev
 
-This is an incomplete backend deployment, not a working file-sharing preview. The public health request could not be verified: the execution network returned `403 Forbidden: requests to ...workers.dev are not allowed`. This was a network-policy denial, not an observed Worker response.
+Frontend staging URL: https://deplyze-space-staging-next-q.vercel.app
+
+The frontend deployment reached READY and its home and transfer pages returned HTTP 200 through the Vercel connector; transfer-page HTML contains noindex metadata. Project-level authentication protections are disabled only for this new staging project. This is not yet a working hosted file-sharing flow. The public health request could not be verified: the execution network returned `403 Forbidden: requests to ...workers.dev are not allowed`. This was a network-policy denial, not an observed Worker response.
 
 ## Current genuine blockers
 
-1. R2 reads and `POST /accounts/b6683d42632a146d7b07fad1a528a8cb/r2/buckets` return Cloudflare **10042: Please enable R2 through the Cloudflare Dashboard**. The operator must activate R2 in this account, or reconnect the intended account if the account change was accidental. No bucket was created; no existing bucket was modified.
+1. R2 activation is resolved. The private `deplyze-space-staging` bucket was created on 15 October 2026. Token permission-group discovery at both `/accounts/b6683d42632a146d7b07fad1a528a8cb/tokens/permission_groups` and `/user/tokens/permission_groups` returns **9109: Unauthorized**. The operator must create a bucket-scoped Object Read & Write token and store its credentials as encrypted Worker secrets `R2_ACCESS_KEY_ID` and `R2_SECRET_ACCESS_KEY`. No credentials should be pasted in chat.
 2. The execution network disallows the new workers.dev host, R2 S3 endpoints and browser downloads from `cdn.playwright.dev`. Hosted end-to-end verification needs authorized network access to the eventual frontend, API and R2 hosts. System Chromium worked locally. Firefox/WebKit and real mobile hardware remain unverified.
 
-Historical pre-reauthorization calls in account `34c5468ebfcd71e2a958b25cfb0bde40` returned error 10000 for R2/D1 creation. They were not retried against that old account after reauthorization. The connector's temporary `Unknown tool` errors are resolved and no longer a blocker.
+Historical pre-reauthorization calls in account `34c5468ebfcd71e2a958b25cfb0bde40` returned error 10000 for R2/D1 creation. They were not retried against that old account after reauthorization. The connector's temporary `Unknown tool` errors and R2 activation error 10042 are resolved and no longer blockers.
 
 ## Remaining release work
 
-- Reinspect the named resources after R2 activation. Create only the missing `deplyze-space-staging` private bucket. Keep public bucket domains disabled; create bucket-scoped S3 credentials and store them as Worker secrets. Apply exact-origin CORS, lifecycle safeguards, the R2 binding and cleanup Cron.
-- Deploy a separate Vercel staging frontend and configure exact frontend/API/share origins. `UPLOADS_ENABLED` must stay false until storage, quotas and CORS are verified. The full deployment script checks the staging account, resource names and origins; it does not switch production domains.
+- Configure the two bucket-scoped S3 credential secrets. Keep public bucket domains disabled. CORS, lifecycle safeguards, R2 binding and Cron are already applied; inspect before changing them.
+- The separate Vercel staging frontend and exact frontend/API/share origins are configured. Deploy subsequent tested fixes to that same staging project. `UPLOADS_ENABLED` must stay false until storage, quotas and CORS are verified. The full deployment script checks the staging account, resource names and origins; it does not switch production domains.
 - Repeat actual uploads against hosted R2, including signed Content-Length and MD5 enforcement, 2 GiB boundary transfers, concurrent actual uploads, retries, expiration, cleanup and separate devices. Local behavior does not certify hosted R2 enforcement.
 - Confirm paid Workers CPU capacity and measure the 600,000-iteration PBKDF2 latency. Confirm a private abuse contact and the operator's privacy/retention language.
 - Inspect the live domain's current project and DNS, stage the concrete production build, and obtain approval before the domain cutover. No cutover approval has been requested or granted.
+- GitHub Actions run 38772541886 concluded failure with no recorded job steps, and its job-log download returned BlobNotFound. Local checks and Vercel builds pass; the GitHub runner failure remains unexplained and must not be described as a passing CI check.
 
 ## Implementation limits
 
