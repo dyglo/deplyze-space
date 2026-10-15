@@ -1,7 +1,9 @@
 import { parse } from "jsonc-parser";
 import { readFile } from "node:fs/promises";
 const errors = [];
-const config = parse(await readFile("worker/wrangler.jsonc", "utf8"), errors);
+const config = parse(await readFile("worker/wrangler.jsonc", "utf8"), errors, {
+  allowTrailingComma: true,
+});
 if (errors.length) throw new Error("Invalid Wrangler configuration");
 if (
   config.name !== "deplyze-space-staging" ||

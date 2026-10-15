@@ -18,7 +18,7 @@
     "crons": ["*/15 * * * *"],
   },
   "vars": {
-    "ALLOWED_ORIGINS": "https://deplyze-space-staging-next-q.vercel.app,https://deplyze-space-staging-iof4sotjf-next-q.vercel.app",
+    "ALLOWED_ORIGINS": "https://deplyze-space-staging-next-q.vercel.app,https://deplyze-space-staging-f8p15brto-next-q.vercel.app",
     "SHARE_ORIGIN": "https://deplyze-space-staging-next-q.vercel.app",
     "R2_ACCOUNT_ID": "b6683d42632a146d7b07fad1a528a8cb",
     "R2_BUCKET": "deplyze-space-staging",

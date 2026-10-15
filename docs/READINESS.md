@@ -16,12 +16,15 @@ Backend staging URL: https://deplyze-space-staging.deplyze-space-b6683d42.worker
 
 Frontend staging URL: https://deplyze-space-staging-next-q.vercel.app
 
+Vercel deployment dpl_DR8ds5RvHvXXiunCsybQGgdEh9wj builds commit 3aacbbc9001cebb35c9db1fb26a5b94643ceab19, including the dependency security fix. Vercel labels the default deployment of this separate staging project “production”; its assigned hostnames are only vercel.app staging aliases. No deplyze.space domain was attached or switched.
+
 The frontend deployment reached READY and its home and transfer pages returned HTTP 200 through the Vercel connector; transfer-page HTML contains noindex metadata. Project-level authentication protections are disabled only for this new staging project. This is not yet a working hosted file-sharing flow. The public health request could not be verified: the execution network returned `403 Forbidden: requests to ...workers.dev are not allowed`. This was a network-policy denial, not an observed Worker response.
 
 ## Current genuine blockers
 
 1. R2 activation is resolved. The private `deplyze-space-staging` bucket was created on 15 October 2026. Token permission-group discovery at both `/accounts/b6683d42632a146d7b07fad1a528a8cb/tokens/permission_groups` and `/user/tokens/permission_groups` returns **9109: Unauthorized**. The operator must create a bucket-scoped Object Read & Write token and store its credentials as encrypted Worker secrets `R2_ACCESS_KEY_ID` and `R2_SECRET_ACCESS_KEY`. No credentials should be pasted in chat.
 2. The execution network disallows the new workers.dev host, R2 S3 endpoints and browser downloads from `cdn.playwright.dev`. Hosted end-to-end verification needs authorized network access to the eventual frontend, API and R2 hosts. System Chromium worked locally. Firefox/WebKit and real mobile hardware remain unverified.
+3. GitHub Actions cannot start because the account is locked due to a billing issue, as stated by the annotation on run 38773614747. Local checks and Vercel builds remain independently verified.
 
 Historical pre-reauthorization calls in account `34c5468ebfcd71e2a958b25cfb0bde40` returned error 10000 for R2/D1 creation. They were not retried against that old account after reauthorization. The connector's temporary `Unknown tool` errors and R2 activation error 10042 are resolved and no longer blockers.
 
@@ -32,7 +35,7 @@ Historical pre-reauthorization calls in account `34c5468ebfcd71e2a958b25cfb0bde4
 - Repeat actual uploads against hosted R2, including signed Content-Length and MD5 enforcement, 2 GiB boundary transfers, concurrent actual uploads, retries, expiration, cleanup and separate devices. Local behavior does not certify hosted R2 enforcement.
 - Confirm paid Workers CPU capacity and measure the 600,000-iteration PBKDF2 latency. Confirm a private abuse contact and the operator's privacy/retention language.
 - Inspect the live domain's current project and DNS, stage the concrete production build, and obtain approval before the domain cutover. No cutover approval has been requested or granted.
-- GitHub Actions run 38772541886 concluded failure with no recorded job steps, and its job-log download returned BlobNotFound. Local checks and Vercel builds pass; the GitHub runner failure remains unexplained and must not be described as a passing CI check.
+- GitHub Actions run 38773614747 did not start its job. Its public run annotation states: “The job was not started because your account is locked due to a billing issue.” This is a verified GitHub account blocker, not a failing application test. Resolve billing before relying on CI; local checks and Vercel builds independently pass.
 
 ## Implementation limits
 

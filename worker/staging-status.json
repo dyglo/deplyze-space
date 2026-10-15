@@ -16,6 +16,8 @@
   "cors_applied": true,
   "frontend_url": "https://deplyze-space-staging-next-q.vercel.app",
   "vercel_project_id": "prj_Sl8WgKVXOjMJapGIsB6TmwNzUhjy",
-  "vercel_deployment_id": "dpl_5nPjDSHbbSZKgr5pDr72GUsvjFpo",
-  "frontend_http_verified": true
+  "vercel_deployment_id": "dpl_DR8ds5RvHvXXiunCsybQGgdEh9wj",
+  "frontend_http_verified": true,
+  "frontend_deployed_commit": "3aacbbc9001cebb35c9db1fb26a5b94643ceab19",
+  "github_ci_blocker": "GitHub account locked due to a billing issue"
 }
