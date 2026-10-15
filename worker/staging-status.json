@@ -9,7 +9,7 @@
   "uploads_enabled": false,
   "cron_registered": true,
   "public_health_verified": false,
-  "blocker": "R2 S3 credential secrets not configured; staging hosts denied by execution network policy",
+  "blocker": "Staging frontend, Worker and R2 hosts denied by enforced execution HTTP network policy",
   "r2_bucket": "deplyze-space-staging",
   "bucket_public_access": false,
   "lifecycle_applied": true,
@@ -19,5 +19,11 @@
   "vercel_deployment_id": "dpl_DR8ds5RvHvXXiunCsybQGgdEh9wj",
   "frontend_http_verified": true,
   "frontend_deployed_commit": "3aacbbc9001cebb35c9db1fb26a5b94643ceab19",
-  "github_ci_blocker": "GitHub account locked due to a billing issue"
+  "github_ci_blocker": "GitHub account locked due to a billing issue",
+  "credential_bindings_encrypted": true,
+  "s3_credential_validity_verified": false,
+  "credential_binding_names": [
+    "R2_ACCESS_KEY_ID",
+    "R2_SECRET_ACCESS_KEY"
+  ]
 }

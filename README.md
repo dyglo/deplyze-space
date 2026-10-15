@@ -1,6 +1,6 @@
 # Deplyze Space
 
-Existing Next.js design with a Cloudflare Worker, private R2 storage, and D1 metadata. No account required. **Not production released:** the staging Worker and D1 schema are deployed, but S3 credential configuration and hosted transfer verification remain blocked; see [readiness](docs/READINESS.md).
+Existing Next.js design with a Cloudflare Worker, private R2 storage, and D1 metadata. No account required. **Not production released:** the staging Worker and D1 schema are deployed, but hosted transfer verification remains blocked by execution-network policy; see [readiness](docs/READINESS.md).
 
 ## Local checks
 
@@ -10,7 +10,7 @@ Node 24, npm. `npm ci`, `npm run worker:types`, `npm run typecheck`, `npm test`,
 
 ## Staging setup
 
-Inspect resources in account `b6683d42632a146d7b07fad1a528a8cb` before creating anything. Reuse resources named `deplyze-space-staging`. Do not reuse `deplyzegpt-storage`. The tracked D1 ID is `a372c702-cb31-429d-ad69-a6c4d142f534`. This database and the named Worker already exist; reuse them. The private bucket now exists, has public access disabled, and has CORS/lifecycle safeguards applied. The cleanup Cron is registered. The S3 credential secrets are still missing. The staging frontend is https://deplyze-space-staging-next-q.vercel.app.
+Inspect resources in account `b6683d42632a146d7b07fad1a528a8cb` before creating anything. Reuse resources named `deplyze-space-staging`. Do not reuse `deplyzegpt-storage`. The tracked D1 ID is `a372c702-cb31-429d-ad69-a6c4d142f534`. This database and the named Worker already exist; reuse them. The private bucket now exists, has public access disabled, and has CORS/lifecycle safeguards applied. The cleanup Cron is registered. Both S3 credential bindings now have the correct names and are encrypted. Their S3 access still needs hosted verification. The staging frontend is https://deplyze-space-staging-next-q.vercel.app.
 
 1. Verify Cloudflare connection and account. Required permissions: Workers R2 Storage Write, D1 Write, Workers Scripts Write. A bucket-scoped R2 Object Read & Write credential is also required for S3 multipart control/signing. No credentials belong in the browser or Git.
 2. Reuse the existing `deplyze-space-staging` R2 bucket and D1 database. Create them only if inspection confirms they are missing. Record the real D1 ID in `worker/wrangler.jsonc`. Keep R2 `r2.dev` and custom public domains disabled. Inspect existing settings before changes.
