@@ -1,0 +1,29 @@
+{
+  "account_id": "b6683d42632a146d7b07fad1a528a8cb",
+  "worker": "deplyze-space-staging",
+  "worker_url": "https://deplyze-space-staging.deplyze-space-b6683d42.workers.dev",
+  "bundle_sha256": "7f8ddd4ba01ea2e19592de26fe711662748e199709c067ba36a19032bef23e91",
+  "database_id": "a372c702-cb31-429d-ad69-a6c4d142f534",
+  "migration_applied": "0001_transfers.sql",
+  "r2_bound": true,
+  "uploads_enabled": true,
+  "cron_registered": true,
+  "public_health_verified": false,
+  "blocker": "Staging frontend, Worker and R2 hosts denied by enforced execution HTTP network policy",
+  "r2_bucket": "deplyze-space-staging",
+  "bucket_public_access": false,
+  "lifecycle_applied": true,
+  "cors_applied": true,
+  "frontend_url": "https://deplyze-space-staging-next-q.vercel.app",
+  "vercel_project_id": "prj_Sl8WgKVXOjMJapGIsB6TmwNzUhjy",
+  "vercel_deployment_id": "dpl_DR8ds5RvHvXXiunCsybQGgdEh9wj",
+  "frontend_http_verified": true,
+  "frontend_deployed_commit": "3aacbbc9001cebb35c9db1fb26a5b94643ceab19",
+  "github_ci_blocker": "GitHub account locked due to a billing issue",
+  "credential_bindings_encrypted": true,
+  "s3_credential_validity_verified": false,
+  "credential_binding_names": [
+    "R2_ACCESS_KEY_ID",
+    "R2_SECRET_ACCESS_KEY"
+  ]
+}

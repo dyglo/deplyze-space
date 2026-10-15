@@ -14,3 +14,14 @@ __v0_jsx-dev-runtime.ts
 node_modules
 .next/
 .DS_Store
+node_modules/
+.wrangler/
+.dev.vars*
+.env*
+!.env.example
+playwright-report/
+test-results/
+worker/worker-configuration.d.ts
+*.tsbuildinfo
+.worker-build/
+next-env.d.ts

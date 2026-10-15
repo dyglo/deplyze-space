@@ -1,0 +1,6 @@
+{
+ "rules":[{
+  "allowed":{"origins":["https://REPLACE-WITH-EXACT-STAGING-HOST.vercel.app"],"methods":["PUT"],"headers":["Content-Type","Content-MD5","Content-Length"]},
+  "exposeHeaders":["ETag"],"maxAgeSeconds":600
+ }]
+}

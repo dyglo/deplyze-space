@@ -2,35 +2,51 @@
   "name": "my-project",
   "version": "0.1.0",
   "private": true,
-  "packageManager": "pnpm@12.3.4",
+  "packageManager": "npm@11.9.0",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "typecheck": "tsc --noEmit && tsc -p worker/tsconfig.json",
+    "worker:dev": "wrangler dev --config worker/wrangler.jsonc",
+    "worker:types": "wrangler types worker/worker-configuration.d.ts --config worker/wrangler.jsonc",
+    "test": "vitest run",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "3.1152.0",
+    "@aws-sdk/s3-request-presigner": "3.1152.0",
     "@base-ui/react": "^1.5.0",
     "@vercel/analytics": "1.6.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "hash-wasm": "^4.12.0",
     "lucide-react": "^1.16.0",
     "motion": "^14.2.0",
     "next": "16.4.0",
     "qrcode": "^1.5.4",
     "react": "^19",
     "react-dom": "^19",
-    "shadcn": "^4.11.0",
     "tailwind-merge": "^3.3.1",
-    "tw-animate-css": "^1.4.0"
+    "tw-animate-css": "^1.4.0",
+    "zod": "^4.6.7"
   },
   "devDependencies": {
+    "@playwright/test": "^1.64.1",
     "@tailwindcss/postcss": "^4.3.3",
     "@types/node": "^24",
     "@types/qrcode": "^1.5.6",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "esbuild": "^0.28.2",
+    "jsonc-parser": "^3.3.1",
+    "jsqr": "^1.4.0",
+    "miniflare": "^5.20261012.0-beta",
     "postcss": "^8.5",
+    "prettier": "^3.9.10",
     "tailwindcss": "^4.3.3",
-    "typescript": "5.7.3"
+    "typescript": "5.7.3",
+    "vitest": "^5.0.4",
+    "wrangler": "^4.151.0"
   }
 }
