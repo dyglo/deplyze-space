@@ -37,3 +37,7 @@ Before deploying, run the relevant local checks and dry run. `scripts/deploy-sta
 Pause admissions with `UPLOADS_ENABLED=false` if rollback is needed. Preserve R2, D1, migrations and secrets. The previous frontend `dpl_CSVcbovvSiQvpwfD6izQyzqkyUCP` supports the same password endpoint. Keep current production origin policies when rolling code back; earlier Worker versions lack those origins. Test the real domains before restoring admissions.
 
 Files download individually as attachments. There is no archive endpoint, malware scanning or end-to-end encryption. Distributed abuse still needs monitoring beyond IP quotas. A private abuse contact remains an operator follow-up; the current privacy page links to public GitHub issues and warns against posting sensitive contents.
+
+## SEO checks and search operations
+
+See [SEO strategy, audit and Search Console steps](docs/SEO-STRATEGY.md) and [measured verification](docs/SEO-VERIFICATION.json). Run `npm run lint`, `npm run build`, then `CHROMIUM_PATH=/usr/bin/chromium npm run test:seo` for production-build desktop/mobile metadata, sitemap, robots, noindex and server-rendering checks. `npm run test:e2e` retains real local transfer regression coverage. Only `/` and `/privacy` are in the sitemap; private `/s/*` and `/api/*` responses must remain noindex. Add metadata explicitly when creating a new public page. `node scripts/generate-social-preview.mjs` regenerates the separate typography-only social card. Existing icon artwork is preserved pending the actual Deplyze brand files.

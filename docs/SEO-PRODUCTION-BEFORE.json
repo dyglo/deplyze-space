@@ -1,0 +1,72 @@
+{
+  "checkedAt": "2026-10-16",
+  "method": "Authenticated Vercel deployment fetch; private path is a synthetic all-zero identifier.",
+  "checks": [
+    {
+      "status": "fulfilled",
+      "value": {
+        "path": "/",
+        "status": 200,
+        "robotsHeader": null,
+        "title": "Less is More — Private file sharing",
+        "canonical": null,
+        "robotsMeta": null
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "path": "/privacy",
+        "status": 200,
+        "robotsHeader": null,
+        "title": "Less is More — Private file sharing",
+        "canonical": null,
+        "robotsMeta": null
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "path": "/robots.txt",
+        "status": 404,
+        "robotsHeader": null,
+        "title": "Less is More — Private file sharing",
+        "canonical": null,
+        "robotsMeta": "noindex"
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "path": "/sitemap.xml",
+        "status": 404,
+        "robotsHeader": null,
+        "title": "Less is More — Private file sharing",
+        "canonical": null,
+        "robotsMeta": "noindex"
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "path": "/s/00000000000000000000000000000000",
+        "status": 200,
+        "robotsHeader": null,
+        "title": "Download — Deplyze Space",
+        "canonical": null,
+        "robotsMeta": "noindex, nofollow"
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "path": "/api/internal/password",
+        "status": 405,
+        "robotsHeader": null,
+        "title": null,
+        "canonical": null,
+        "robotsMeta": null
+      }
+    }
+  ]
+}

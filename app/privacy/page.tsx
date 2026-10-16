@@ -1,3 +1,11 @@
+import { publicMetadata } from "@/lib/seo";
+
+export const metadata = publicMetadata(
+  "Privacy & acceptable use | Deplyze Space",
+  "How Deplyze Space handles shared files, passwords, expiry, deletion, and abuse reports. Understand the limits of private link sharing.",
+  "/privacy",
+);
+
 export default function Privacy() {
   return (
     <main className="site-shell">

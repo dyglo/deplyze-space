@@ -13,7 +13,9 @@
     "test": "vitest run",
     "test:e2e": "playwright test",
     "test:hosted": "playwright test --config playwright.hosted.config.ts",
-    "test:staging:origins": "node scripts/verify-staging-origins.mjs"
+    "test:staging:origins": "node scripts/verify-staging-origins.mjs",
+    "lint": "eslint app lib components",
+    "test:seo": "playwright test --config playwright.seo.config.ts"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "3.1152.0",
@@ -41,6 +43,8 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "esbuild": "^0.28.2",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "^16.4.0",
     "jsonc-parser": "^3.3.1",
     "jsqr": "^1.4.0",
     "miniflare": "^5.20261012.0-beta",

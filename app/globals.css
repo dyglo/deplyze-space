@@ -178,3 +178,10 @@ button:disabled { opacity:0.6; cursor:wait; }
 .share-reveal:focus-within .share-options { opacity:1; transform:translateX(0); }
 @media (hover:none) { .share-reveal .share-label { opacity:0; } .share-reveal .share-options { opacity:1; transform:translateX(0); } }
 @media (max-width:600px) { .bottom-nav a.footer-center { display:block; justify-self:end; } .bottom-nav > span:empty { display:none; } }
+
+.sharing-guide { width: min(100% - 40px, 520px); margin: 8px auto 32px; color: var(--muted-ink); font-size: 12px; line-height: 1.7; }
+.sharing-guide h2 { color: var(--ink); font-family: var(--serif); font-size: 20px; font-weight: 400; margin: 0 0 10px; }
+.sharing-guide details { border-top: 1px solid var(--hairline); padding: 9px 0; }
+.sharing-guide summary { cursor: pointer; color: var(--ink); }
+.sharing-guide p { margin: 8px 0 14px; }
+.sharing-guide > a { text-decoration: underline; text-underline-offset: 3px; }
