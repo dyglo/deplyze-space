@@ -4,7 +4,9 @@
       "allowed": {
         "origins": [
           "https://deplyze-space-staging-next-q.vercel.app",
-          "https://deplyze-space-staging-f8p15brto-next-q.vercel.app"
+          "https://deplyze-space-staging-f8p15brto-next-q.vercel.app",
+          "https://deplyze-space-staging.vercel.app",
+          "https://deplyze-space-staging-9j1pyisgw-next-q.vercel.app"
         ],
         "methods": ["PUT"],
         "headers": ["Content-Type", "Content-MD5", "Content-Length"]
