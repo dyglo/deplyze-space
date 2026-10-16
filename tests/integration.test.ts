@@ -1,6 +1,6 @@
 import { quotaStatements } from "../worker/src/admission";
 import { beforeAll, afterAll, describe, it, expect } from "vitest";
-import { Miniflare, convertV4MiniflareOptions } from "miniflare";
+import { Miniflare, convertV4MiniflareOptions, fetch } from "miniflare";
 import { build } from "esbuild";
 import { readFile } from "node:fs/promises";
 import { createHash } from "node:crypto";

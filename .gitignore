@@ -25,3 +25,4 @@ worker/worker-configuration.d.ts
 *.tsbuildinfo
 .worker-build/
 next-env.d.ts
+.artifacts/
