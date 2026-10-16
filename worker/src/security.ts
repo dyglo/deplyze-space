@@ -74,7 +74,9 @@ export async function passwordHash(
         Authorization: `Bearer ${service.PASSWORD_KDF_SECRET}`,
       },
       body: JSON.stringify({ password, salt }),
-      redirect: "error",
+      // Workers supports manual/follow only. Refuse 3xx below so the service
+      // credential can never be forwarded to a redirect destination.
+      redirect: "manual",
       signal: AbortSignal.timeout(10000),
     });
     if (!response.ok) throw new Error("Password service unavailable");
