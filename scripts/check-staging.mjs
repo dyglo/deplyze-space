@@ -36,7 +36,9 @@ for (const origin of [...origins, config.vars.SHARE_ORIGIN]) {
 if (!origins.includes(config.vars.SHARE_ORIGIN))
   throw new Error("Share origin must be an allowed frontend origin");
 const cors = JSON.parse(await readFile("worker/r2-cors.staging.json", "utf8"));
-const uploadRule = cors.rules.find((rule) => rule.allowed.methods.includes("PUT"));
+const uploadRule = cors.rules.find((rule) =>
+  rule.allowed.methods.includes("PUT"),
+);
 if (
   !uploadRule ||
   JSON.stringify([...uploadRule.allowed.origins].sort()) !==
@@ -44,7 +46,16 @@ if (
   !uploadRule.allowed.headers.includes("Content-MD5") ||
   !uploadRule.exposeHeaders.includes("ETag")
 )
-  throw new Error("Worker and R2 upload origins/headers must match before deployment");
+  throw new Error(
+    "Worker and R2 upload origins/headers must match before deployment",
+  );
 if (config.vars.R2_ENDPOINT)
   throw new Error("Remove the local R2 endpoint override before deploying");
+if (
+  config.vars.PASSWORD_KDF_URL !==
+  new URL("/api/internal/password", config.vars.SHARE_ORIGIN).href
+)
+  throw new Error(
+    "Password derivation must use the verified staging frontend service",
+  );
 console.log("Staging target verified; no production routes configured.");
