@@ -11,7 +11,9 @@
     "worker:dev": "wrangler dev --config worker/wrangler.jsonc",
     "worker:types": "wrangler types worker/worker-configuration.d.ts --config worker/wrangler.jsonc",
     "test": "vitest run",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "test:hosted": "playwright test --config playwright.hosted.config.ts",
+    "test:staging:origins": "node scripts/verify-staging-origins.mjs"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "3.1152.0",

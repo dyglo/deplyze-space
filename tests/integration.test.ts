@@ -1,10 +1,11 @@
 import { quotaStatements } from "../worker/src/admission";
 import { beforeAll, afterAll, describe, it, expect } from "vitest";
-import { Miniflare, convertV4MiniflareOptions } from "miniflare";
+import { Miniflare, convertV4MiniflareOptions, fetch } from "miniflare";
 import { build } from "esbuild";
 import { readFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
 import { hash, id } from "../worker/src/security";
+import { derivePasswordRequest } from "../lib/password-kdf";
 let mf: Miniflare;
 beforeAll(async () => {
   const built = await build({
@@ -34,6 +35,19 @@ beforeAll(async () => {
           s3Credentials: { accessKeyId: "test", secretAccessKey: "test" },
         },
       },
+      outboundService: async (request) => {
+        if (new URL(request.url).hostname === "password-service.test") {
+          return derivePasswordRequest(
+            new Request(request.url, {
+              method: request.method,
+              headers: request.headers,
+              body: await request.text(),
+            }),
+            "test-service-only-secret",
+          );
+        }
+        return fetch(request);
+      },
       bindings: {
         SIGNING_SECRET: "test-only-signing-key",
         R2_ACCESS_KEY_ID: "test",
@@ -44,6 +58,8 @@ beforeAll(async () => {
         ALLOWED_ORIGINS: "http://localhost:3000",
         SHARE_ORIGIN: "http://localhost:3000",
         UPLOADS_ENABLED: "true",
+        PASSWORD_KDF_URL: "https://password-service.test/api/internal/password",
+        PASSWORD_KDF_SECRET: "test-service-only-secret",
       },
     }),
   );

@@ -1,4 +1,5 @@
 import { describe, it, expect } from "vitest";
+import { pbkdf2Sync } from "node:crypto";
 import {
   active,
   equal,
@@ -46,6 +47,10 @@ describe("transfer security", () => {
     expect(a).not.toBe(b);
     expect(await passwordMatches("a long password", a)).toBe(true);
     expect(await passwordMatches("wrong password", a)).toBe(false);
+    const salt = "0123456789abcdef0123456789abcdef";
+    expect(await passwordHash("unicode 密码 🌍", salt)).toBe(
+      `${salt}:${pbkdf2Sync("unicode 密码 🌍", salt, 600000, 32, "sha256").toString("hex")}`,
+    );
   });
   it("binds signatures to the resource and compares full values", async () => {
     expect(await mac("secret", "file1")).not.toBe(await mac("secret", "file2"));

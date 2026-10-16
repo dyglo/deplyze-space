@@ -52,11 +52,50 @@ export async function mac(secret: string, value: string) {
     await crypto.subtle.sign("HMAC", k, new TextEncoder().encode(value)),
   );
 }
-export async function passwordHash(password: string, salt = id()) {
+type PasswordService = {
+  PASSWORD_KDF_URL?: string;
+  PASSWORD_KDF_SECRET?: string;
+};
+export async function passwordHash(
+  password: string,
+  salt = id(),
+  service?: PasswordService,
+) {
+  if (service?.PASSWORD_KDF_URL) {
+    if (
+      !service.PASSWORD_KDF_SECRET ||
+      new URL(service.PASSWORD_KDF_URL).protocol !== "https:"
+    )
+      throw new Error("Password service is not configured");
+    const response = await fetch(service.PASSWORD_KDF_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${service.PASSWORD_KDF_SECRET}`,
+      },
+      body: JSON.stringify({ password, salt }),
+      // Workers supports manual/follow only. Refuse 3xx below so the service
+      // credential can never be forwarded to a redirect destination.
+      redirect: "manual",
+      signal: AbortSignal.timeout(10000),
+    });
+    if (!response.ok) throw new Error("Password service unavailable");
+    const value = (await response.json()) as { hash?: unknown };
+    if (typeof value.hash !== "string" || !/^[a-f0-9]{64}$/.test(value.hash))
+      throw new Error("Invalid password service response");
+    return `${salt}:${value.hash}`;
+  }
   return `${salt}:${pbkdf2Sync(password, salt, 600000, 32, "sha256").toString("hex")}`;
 }
-export async function passwordMatches(password: string, stored: string) {
-  return equal(await passwordHash(password, stored.split(":")[0]), stored);
+export async function passwordMatches(
+  password: string,
+  stored: string,
+  service?: PasswordService,
+) {
+  return equal(
+    await passwordHash(password, stored.split(":")[0], service),
+    stored,
+  );
 }
 export function active(
   t: { status: string; expires_at: number },
