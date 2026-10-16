@@ -24,6 +24,7 @@
     "R2_BUCKET": "deplyze-space-staging",
     "UPLOADS_ENABLED": "true",
     "R2_ENDPOINT": "",
+    "PASSWORD_KDF_URL": "https://deplyze-space-staging-next-q.vercel.app/api/internal/password",
   },
   "r2_buckets": [
     {
@@ -40,7 +41,7 @@
     },
   ],
   "secrets": {
-    "required": ["SIGNING_SECRET", "R2_ACCESS_KEY_ID", "R2_SECRET_ACCESS_KEY"],
+    "required": ["SIGNING_SECRET", "R2_ACCESS_KEY_ID", "R2_SECRET_ACCESS_KEY", "PASSWORD_KDF_SECRET"],
   },
   "alias": {
     "@aws-sdk/xml-builder": "@aws-sdk/xml-builder/dist-cjs/index.js",

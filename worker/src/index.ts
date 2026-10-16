@@ -229,7 +229,7 @@ async function route(req: Request, env: Env) {
         ).bind(
           tid,
           await hash(token),
-          data.password ? await passwordHash(data.password) : null,
+          data.password ? await passwordHash(data.password, undefined, env) : null,
           now,
           expiry,
           now + 86400000,
@@ -268,7 +268,7 @@ async function route(req: Request, env: Env) {
     const { password } = z
       .object({ password: z.string().max(128) })
       .parse(await body(req));
-    if (t.password_hash && !(await passwordMatches(password, t.password_hash)))
+    if (t.password_hash && !(await passwordMatches(password, t.password_hash, env)))
       fail(401, "Incorrect password");
     const expiry = String(Math.min(Date.now() + 3600000, t.expires_at));
     return json({
@@ -308,7 +308,7 @@ async function route(req: Request, env: Env) {
       .parse(await body(req));
     const samePassword = t.password_hash
       ? !!settings.password &&
-        (await passwordMatches(settings.password, t.password_hash))
+        (await passwordMatches(settings.password, t.password_hash, env))
       : !settings.password;
     if (
       t.expires_at - t.created_at !== settings.days * 86400000 ||
