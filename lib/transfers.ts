@@ -28,16 +28,37 @@ export async function api<T>(
     throw new Error(
       "File transfers are not configured yet. Please try again later.",
     );
-  const response = await fetch(`${API}${path}`, {
-    ...options,
-    headers: {
-      "Content-Type": "application/json",
-      ...options.headers,
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
-    },
-    cache: "no-store",
-  });
-  const data = (await response.json()) as T & { error?: string };
+  const timeout = AbortSignal.timeout(30000);
+  let response: Response;
+  try {
+    response = await fetch(`${API}${path}`, {
+      ...options,
+      signal: options.signal
+        ? AbortSignal.any([options.signal, timeout])
+        : timeout,
+      headers: {
+        "Content-Type": "application/json",
+        ...options.headers,
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
+      cache: "no-store",
+    });
+  } catch (error) {
+    if (options.signal?.aborted) throw error;
+    throw new Error(
+      timeout.aborted
+        ? "The transfer service took too long to respond. Retry the transfer."
+        : "Could not reach the transfer service. Check your connection and retry.",
+    );
+  }
+  let data: T & { error?: string };
+  try {
+    data = await response.json();
+  } catch {
+    throw new Error(
+      "The transfer service is temporarily unavailable. Please retry.",
+    );
+  }
   if (!response.ok)
     throw Object.assign(new Error(data.error || "Request failed"), {
       status: response.status,
@@ -67,6 +88,7 @@ function put(
   return new Promise<string>((resolve, reject) => {
     const xhr = new XMLHttpRequest();
     xhr.open("PUT", url);
+    xhr.timeout = 120000;
     xhr.setRequestHeader("Content-MD5", checksum);
     const abort = () => xhr.abort();
     signal.addEventListener("abort", abort, { once: true });
@@ -81,6 +103,10 @@ function put(
     xhr.onerror = () => {
       done();
       reject(new Error("Connection interrupted. Retry the transfer."));
+    };
+    xhr.ontimeout = () => {
+      done();
+      reject(new Error("Storage upload timed out. Retry the transfer."));
     };
     xhr.onabort = () => {
       done();
