@@ -6,7 +6,7 @@ export default defineConfig({
   timeout: 240000,
   retries: 0,
   use: {
-    baseURL: "https://deplyze-space-staging.vercel.app",
+    baseURL: process.env.HOSTED_BASE_URL || "https://deplyze.space",
     // Never retain traces: request URLs contain short-lived bearer signatures.
     trace: "off",
     permissions: ["clipboard-read", "clipboard-write"],

@@ -4,6 +4,7 @@ import { readFile, mkdir, writeFile } from "node:fs/promises";
 import jsQR from "jsqr";
 
 const api = "https://deplyze-space-staging.deplyze-space-b6683d42.workers.dev";
+const shareOrigin = process.env.HOSTED_SHARE_ORIGIN || "https://www.deplyze.space";
 const sha = (data: Buffer) => createHash("sha256").update(data).digest("hex");
 function samplePdf() {
   const objects = [
@@ -184,7 +185,7 @@ test("real R2 multipart recovery, multiple formats, QR and isolated recipient in
   expect(session).toBeDefined();
   const url = await page.locator(".link-line span").innerText();
   expect(url).toBe(
-    `https://deplyze-space-staging-next-q.vercel.app/s/${session!.id}`,
+    `${shareOrigin}/s/${session!.id}`,
   );
   const pixels = await page
     .locator("canvas")
@@ -249,7 +250,7 @@ test("real R2 multipart recovery, multiple formats, QR and isolated recipient in
     checks.push({ file: original!.name, sha256: actual });
   }
   await recipient.goto(
-    "https://deplyze-space-staging-next-q.vercel.app/s/invalid",
+    `${shareOrigin}/s/invalid`,
   );
   await expect(recipient.getByRole("main").getByRole("alert")).toHaveText(
     "Transfer not found",
