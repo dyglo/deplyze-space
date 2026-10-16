@@ -1,0 +1,319 @@
+{
+  "verifiedAt": "2026-10-16T15:20:57.625Z",
+  "frontend": "https://www.deplyze.space",
+  "applicationCommit": "e03609a58fdc87b58c496217642712ec2d51ef06",
+  "vercelDeployment": "dpl_24m7SzfrZjDcL2nHBWmMHTsV7wdQ",
+  "workerVersion": "98ec25cd-4bbe-4a58-8de1-c0623dddb628",
+  "local": {
+    "tests": 19,
+    "browserTests": 4,
+    "typecheck": "passed",
+    "build": "passed"
+  },
+  "hosted": {
+    "desktop": {
+      "transferId": "56def0cfa3b44d6e82cca70678ac68e1",
+      "url": "https://www.deplyze.space/s/56def0cfa3b44d6e82cca70678ac68e1",
+      "checks": [
+        {
+          "file": "staging.txt",
+          "sha256": "77d53d7f9e79923ca1bb84e4902e8dacd6d73fdebabf367a8aa526af25465213"
+        },
+        {
+          "file": "pixel.png",
+          "sha256": "c054eec0ca71070d8406b12c9e0b1745c861d337f4818c5fe8334e1b4c0dc425"
+        },
+        {
+          "file": "empty.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "file": "sample.pdf",
+          "sha256": "1d366143f902797780bbc41ab774b358e5ed3e1567c75ae931c755b54b50494e"
+        },
+        {
+          "file": "multipart.dat",
+          "sha256": "ce5ebf4809e9951bda9bc670c325ed9e0938f41a1820666136ff825d83813b45"
+        }
+      ],
+      "statuses": [
+        {
+          "method": "POST",
+          "path": "/transfers",
+          "status": 201
+        },
+        {
+          "method": "POST",
+          "path": "/transfers/56def0cfa3b44d6e82cca70678ac68e1/resume",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/transfers/56def0cfa3b44d6e82cca70678ac68e1/files/00857caaefac490f92638112be369b07/start",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/transfers/56def0cfa3b44d6e82cca70678ac68e1/files/00857caaefac490f92638112be369b07/part",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/transfers/56def0cfa3b44d6e82cca70678ac68e1/files/00857caaefac490f92638112be369b07/part",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/transfers/56def0cfa3b44d6e82cca70678ac68e1/files/00857caaefac490f92638112be369b07/finish",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/transfers/56def0cfa3b44d6e82cca70678ac68e1/files/3cd42f247a644c59a1e10df191f63abc/start",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/transfers/56def0cfa3b44d6e82cca70678ac68e1/files/3cd42f247a644c59a1e10df191f63abc/part",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/transfers/56def0cfa3b44d6e82cca70678ac68e1/files/3cd42f247a644c59a1e10df191f63abc/finish",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/transfers/56def0cfa3b44d6e82cca70678ac68e1/files/bdd4944e85f34342bdeba63540c7359a/start",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/transfers/56def0cfa3b44d6e82cca70678ac68e1/files/bdd4944e85f34342bdeba63540c7359a/part",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/transfers/56def0cfa3b44d6e82cca70678ac68e1/files/bdd4944e85f34342bdeba63540c7359a/finish",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/transfers/56def0cfa3b44d6e82cca70678ac68e1/files/59274942cb6148539275cc6e9ae26e3d/start",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/transfers/56def0cfa3b44d6e82cca70678ac68e1/files/dac4c2527fb049039da79d307a3f53aa/start",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/transfers/56def0cfa3b44d6e82cca70678ac68e1/files/dac4c2527fb049039da79d307a3f53aa/part",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/transfers/56def0cfa3b44d6e82cca70678ac68e1/files/dac4c2527fb049039da79d307a3f53aa/part",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/transfers/56def0cfa3b44d6e82cca70678ac68e1/resume",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/transfers/56def0cfa3b44d6e82cca70678ac68e1/files/00857caaefac490f92638112be369b07/start",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/transfers/56def0cfa3b44d6e82cca70678ac68e1/files/3cd42f247a644c59a1e10df191f63abc/start",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/transfers/56def0cfa3b44d6e82cca70678ac68e1/files/bdd4944e85f34342bdeba63540c7359a/start",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/transfers/56def0cfa3b44d6e82cca70678ac68e1/files/59274942cb6148539275cc6e9ae26e3d/start",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/transfers/56def0cfa3b44d6e82cca70678ac68e1/files/dac4c2527fb049039da79d307a3f53aa/start",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/transfers/56def0cfa3b44d6e82cca70678ac68e1/files/dac4c2527fb049039da79d307a3f53aa/part",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/transfers/56def0cfa3b44d6e82cca70678ac68e1/files/dac4c2527fb049039da79d307a3f53aa/part",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/transfers/56def0cfa3b44d6e82cca70678ac68e1/files/dac4c2527fb049039da79d307a3f53aa/finish",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/transfers/56def0cfa3b44d6e82cca70678ac68e1/complete",
+          "status": 200
+        }
+      ],
+      "recovered": true,
+      "password": false,
+      "errors": []
+    },
+    "mobile": {
+      "transferId": "ee079b9520a44a7c894520f83fafc4d4",
+      "url": "https://www.deplyze.space/s/ee079b9520a44a7c894520f83fafc4d4",
+      "checks": [
+        {
+          "file": "sample.pdf",
+          "sha256": "1d366143f902797780bbc41ab774b358e5ed3e1567c75ae931c755b54b50494e"
+        },
+        {
+          "file": "empty.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "file": "staging.txt",
+          "sha256": "77d53d7f9e79923ca1bb84e4902e8dacd6d73fdebabf367a8aa526af25465213"
+        },
+        {
+          "file": "pixel.png",
+          "sha256": "c054eec0ca71070d8406b12c9e0b1745c861d337f4818c5fe8334e1b4c0dc425"
+        },
+        {
+          "file": "multipart.dat",
+          "sha256": "ce5ebf4809e9951bda9bc670c325ed9e0938f41a1820666136ff825d83813b45"
+        }
+      ],
+      "statuses": [
+        {
+          "method": "POST",
+          "path": "/transfers",
+          "status": 201
+        },
+        {
+          "method": "POST",
+          "path": "/transfers/ee079b9520a44a7c894520f83fafc4d4/resume",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/transfers/ee079b9520a44a7c894520f83fafc4d4/files/60347e3ec159444b85ee8d0587e3dac1/start",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/transfers/ee079b9520a44a7c894520f83fafc4d4/files/60347e3ec159444b85ee8d0587e3dac1/part",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/transfers/ee079b9520a44a7c894520f83fafc4d4/files/60347e3ec159444b85ee8d0587e3dac1/finish",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/transfers/ee079b9520a44a7c894520f83fafc4d4/files/94b123f82c8342ab987510d2229deb4f/start",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/transfers/ee079b9520a44a7c894520f83fafc4d4/files/94b123f82c8342ab987510d2229deb4f/part",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/transfers/ee079b9520a44a7c894520f83fafc4d4/files/94b123f82c8342ab987510d2229deb4f/finish",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/transfers/ee079b9520a44a7c894520f83fafc4d4/files/11d58237cf4048b091a9eb7c1217699f/start",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/transfers/ee079b9520a44a7c894520f83fafc4d4/files/11d58237cf4048b091a9eb7c1217699f/part",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/transfers/ee079b9520a44a7c894520f83fafc4d4/files/11d58237cf4048b091a9eb7c1217699f/finish",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/transfers/ee079b9520a44a7c894520f83fafc4d4/files/36ad9d61d02c4266939df0e3131c2ced/start",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/transfers/ee079b9520a44a7c894520f83fafc4d4/files/d421cbb405b94b94ae37175d16bdfc10/start",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/transfers/ee079b9520a44a7c894520f83fafc4d4/files/d421cbb405b94b94ae37175d16bdfc10/part",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/transfers/ee079b9520a44a7c894520f83fafc4d4/files/d421cbb405b94b94ae37175d16bdfc10/part",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/transfers/ee079b9520a44a7c894520f83fafc4d4/files/d421cbb405b94b94ae37175d16bdfc10/finish",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/transfers/ee079b9520a44a7c894520f83fafc4d4/complete",
+          "status": 200
+        }
+      ],
+      "recovered": false,
+      "password": true,
+      "errors": []
+    },
+    "cancellation": {
+      "transferId": "7ee1adcb2686439eb7c41f9f2d2fd63b",
+      "declaredBytes": 2147483648,
+      "bytesUploaded": 8388608,
+      "oversizedPart": 403,
+      "corruptPart": 400,
+      "cancelled": true,
+      "accessAfterCancellation": 410
+    },
+    "cleanup": {
+      "expiredAndCancelledMetadataGone": true,
+      "r2PrefixesEmpty": [
+        "b2f7628d2af341d7879931104663e3ce/",
+        "9a37149ac1954258972dc5dc8df8f7b6/",
+        "7ee1adcb2686439eb7c41f9f2d2fd63b/"
+      ]
+    },
+    "limits": {
+      "over2GiB": 400,
+      "over50Files": 400,
+      "createThrottling": 429,
+      "quotaConstraintsRejected": true,
+      "quotaStateUnchanged": true
+    },
+    "full2GiBTransferTested": false,
+    "physicalMobileHardwareTested": false
+  },
+  "githubActions": "Account billing lock; job not started"
+}
