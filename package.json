@@ -50,6 +50,7 @@
     "miniflare": "^5.20261012.0-beta",
     "postcss": "^8.5",
     "prettier": "^3.9.10",
+    "sharp": "0.35.5",
     "tailwindcss": "^4.3.3",
     "typescript": "5.7.3",
     "vitest": "^5.0.4",

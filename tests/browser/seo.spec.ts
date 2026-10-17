@@ -107,3 +107,65 @@ test("public explanation and structured data are server rendered without JavaScr
     fullPage: true,
   });
 });
+
+test("supplied brand icons have explicit declarations and crawlable assets", async ({
+  page,
+  request,
+}) => {
+  await page.goto("/");
+  const icons = page.locator('link[rel="icon"]');
+  await expect(icons).toHaveCount(2);
+  await expect(
+    page.locator('link[rel="icon"][href="/favicon-96x96.png"]'),
+  ).toHaveAttribute("sizes", "96x96");
+  await expect(
+    page.locator('link[rel="icon"][href="/favicon.ico"]'),
+  ).toHaveCount(1);
+  await expect(page.locator('link[rel="apple-touch-icon"]')).toHaveCount(1);
+  await expect(page.locator('link[rel="apple-touch-icon"]')).toHaveAttribute(
+    "href",
+    "/apple-touch-icon.png",
+  );
+  expect(
+    await icons.evaluateAll((nodes) =>
+      nodes.some((node) => node.hasAttribute("media")),
+    ),
+  ).toBe(false);
+  const manifestResponse = await request.get("/manifest.webmanifest");
+  const manifest = await manifestResponse.json();
+  expect(manifest.icons.map((icon: { src: string }) => icon.src)).toEqual([
+    "/icon-192.png",
+    "/icon-512.png",
+  ]);
+  for (const [path, size] of [
+    ["/favicon-96x96.png", 96],
+    ["/apple-touch-icon.png", 180],
+    ["/icon-192.png", 192],
+    ["/icon-512.png", 512],
+  ] as const) {
+    const response = await request.get(path);
+    expect(response.status()).toBe(200);
+    expect(response.headers()["content-type"]).toContain("image/png");
+    expect(response.headers()["x-robots-tag"] || "").not.toContain("noindex");
+    const png = await response.body();
+    expect(png.readUInt32BE(16)).toBe(size);
+    expect(png.readUInt32BE(20)).toBe(size);
+  }
+  const ico = await request.get("/favicon.ico");
+  expect(ico.status()).toBe(200);
+  const bytes = await ico.body();
+  expect(bytes.readUInt16LE(2)).toBe(1);
+  expect(bytes.readUInt16LE(4)).toBe(3);
+  expect([bytes[6], bytes[22], bytes[38]]).toEqual([16, 32, 48]);
+  const svg = await request.get("/brand/deplyze-space.svg");
+  expect(svg.status()).toBe(200);
+  expect(await svg.text()).toContain('viewBox="0 0 100 100"');
+  for (const old of [
+    "/icon.svg",
+    "/icon-light-32x32.png",
+    "/icon-dark-32x32.png",
+    "/apple-icon.png",
+  ]) {
+    expect((await request.get(old)).status()).toBe(404);
+  }
+});

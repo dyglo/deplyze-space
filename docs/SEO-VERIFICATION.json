@@ -23,8 +23,13 @@
     "productionBuildSEO": "4 passed, canonical, unique metadata, robots, sitemap, manifest, image dimensions, noindex headers, no-JavaScript content and JSON-LD syntax"
   },
   "brandAssets": {
-    "status": "blocked",
-    "reason": "Current main contains v0 logo assets and placeholders, not the requested Deplyze artwork. Existing icon references preserved."
+    "status": "resolved in branding follow-up",
+    "originalAuditStatus": "blocked: artwork unavailable at the time of the Phase 2 audit",
+    "sources": [
+      "public/brand/deplyze-space.svg",
+      "public/brand/deplyze-space.png"
+    ],
+    "details": "See BRANDING.md for preserved originals, checksums, derivatives and verification. Lighthouse measurements remain the original Phase 2 results."
   },
   "lighthouse": {
     "before-mobile": {
